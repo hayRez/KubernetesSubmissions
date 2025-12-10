@@ -8,3 +8,4 @@
 - [1.4](https://github.com/hayRez/KubernetesSubmissions/tree/1.4/todo-app)
 - [1.5](https://github.com/hayRez/KubernetesSubmissions/tree/1.5/my-project)
 - [1.6](https://github.com/hayRez/KubernetesSubmissions/tree/1.6/my-project)
+- [1.7](https://github.com/hayRez/KubernetesSubmissions/tree/1.7/log-output)
