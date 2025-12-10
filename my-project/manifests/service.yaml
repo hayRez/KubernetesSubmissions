@@ -11,5 +11,4 @@ spec:
       protocol: TCP
       port: 80         # Service port inside cluster
       targetPort: 3000 # Port your container listens on
-      nodePort: 30080  # Port exposed on each node (choose 30000–32767)
-
+  type: ClusterIP
