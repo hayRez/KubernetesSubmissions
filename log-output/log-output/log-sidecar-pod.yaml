@@ -1,0 +1,30 @@
+# log-sidecar-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-sidecar-pod
+  labels:
+    app: log-service
+spec:
+  volumes:
+  - name: shared-logs
+    emptyDir: {}
+    
+  containers:
+  
+  # Log Generator (Writer) Container
+  - name: log-generator
+    image: haydar26/log-generator:latest # <-- MUST UPDATE
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log/app 
+      
+  # Log Reader (Sidecar) Container
+  - name: log-reader
+    image: haydar26/log-reader:latest # <-- MUST UPDATE
+    ports:
+    - containerPort: 8080
+      name: http-log
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log/app

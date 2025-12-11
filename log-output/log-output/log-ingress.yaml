@@ -1,0 +1,20 @@
+# log-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: log-service-ingress-default
+spec:
+  ingressClassName: traefik 
+  
+  rules:
+    # 1. Start the list of rules with a dash (-)
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: log-reader-service 
+              # This port must match the Service's 'port' (80), not the container's 'targetPort' (8080)
+              port:
+                number: 80

@@ -1,0 +1,14 @@
+# log-reader-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: log-reader-service
+spec:
+  selector:
+    app: log-service 
+  type: ClusterIP 
+  ports:
+  - protocol: TCP
+    port: 80       # Service listens on port 80
+    targetPort: 8080 # Routes to the container's port 8080
+    name: http-log

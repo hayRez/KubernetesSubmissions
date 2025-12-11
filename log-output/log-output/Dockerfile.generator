@@ -1,0 +1,10 @@
+# Dockerfile.generator
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copy the Python application file
+COPY generator_app.py /app/
+
+# Command to run the generator
+CMD ["python", "generator_app.py"]
