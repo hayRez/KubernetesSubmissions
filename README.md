@@ -11,3 +11,4 @@
 - [1.7](https://github.com/hayRez/KubernetesSubmissions/tree/1.7/log-output)
 - [1.8](https://github.com/hayRez/KubernetesSubmissions/tree/1.8/my-project)
 - [1.9](https://github.com/hayRez/KubernetesSubmissions/tree/1.9/log-output)
+- [1.10](https://github.com/hayRez/KubernetesSubmissions/tree/1.10/log-output)
