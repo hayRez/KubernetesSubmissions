@@ -1,15 +1,28 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: log-output-ingress
+  name: my-web-ingress
+  annotations:
+    # Optional: If your Ingress Controller supports path rewriting, you'd use this
+    # but we are skipping it as per the prompt instructions.
+    # kubernetes.io/ingress.class: nginx (or whatever you are using)
 spec:
   rules:
-  - http: # <--- The hyphen indicates the start of a list item
+  - http:
       paths:
-      - path: /status
+      # Rule 1: Existing Log Output application
+      - path: /
         pathType: Prefix
         backend:
           service:
-            name: log-output-service
+            name: log-output-service # Your existing service
+            port:
+              number: 80
+      # Rule 2: New Ping-Pong application
+      - path: /pingpong
+        pathType: Prefix
+        backend:
+          service:
+            name: ping-pong-service # The new service name
             port:
               number: 80

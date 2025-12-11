@@ -1,0 +1,12 @@
+{
+  "name": "ping-pong-app",
+  "version": "1.0.0",
+  "description": "A simple Express application that responds with 'pong' and an incrementing counter.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
