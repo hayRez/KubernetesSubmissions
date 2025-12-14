@@ -17,3 +17,10 @@ spec:
         image: haydar26/ping-pong:v2.0.0
         ports:
         - containerPort: 3000
+        volumeMounts:
+        - name: shared-data
+          mountPath: /shared-data
+      volumes:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: shared-pvc

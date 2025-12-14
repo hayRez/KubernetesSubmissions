@@ -4,9 +4,8 @@ metadata:
   name: log-output-service
 spec:
   selector:
-    app: log-output # Matches the label in the Deployment
+    app: log-output
   ports:
     - protocol: TCP
-      port: 80 # The port the Service exposes
-      targetPort: 8080 # The port the container is listening on (from the app.py and Dockerfile)
-  type: ClusterIP
+      port: 80
+      targetPort: 8080

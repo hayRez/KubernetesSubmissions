@@ -16,31 +16,27 @@ spec:
     spec:
       containers:
       - name: log-output-container
-        # 🚨 IMPORTANT: Replace this placeholder with your actual image name
         image: haydar26/log-output:v1.0.0
-        imagePullPolicy: Always
         ports:
         - containerPort: 8080
-        
-        # --- Health Probes with Increased Delays ---
-        # The Liveness Probe checks if the application is running and healthy.
-        # If it fails, the container is restarted.
+        volumeMounts:
+        - name: shared-data
+          mountPath: /shared-data
         livenessProbe:
           httpGet:
             path: /status
             port: 8080
-          # Increased delay to ensure the aiohttp server is fully started
-          initialDelaySeconds: 15 
-          periodSeconds: 20
+          initialDelaySeconds: 30
+          periodSeconds: 10
           timeoutSeconds: 5
-        
-        # The Readiness Probe checks if the application is ready to accept traffic.
-        # If it fails, the Pod is removed from the Service's endpoints list.
         readinessProbe:
           httpGet:
             path: /status
             port: 8080
-          # Increased delay for server startup
-          initialDelaySeconds: 10
+          initialDelaySeconds: 25
           periodSeconds: 10
-          timeoutSeconds: 3
+          timeoutSeconds: 5
+      volumes:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: shared-pvc
