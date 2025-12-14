@@ -1,13 +1,11 @@
-FROM node:lts-slim
+FROM node:20-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
-
 RUN npm install
 
-COPY . .
+COPY server.js ./
 
 EXPOSE 3000
-
-CMD [ "node", "server.js" ]
+CMD ["npm", "start"]

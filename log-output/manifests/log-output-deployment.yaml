@@ -1,9 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-output-deployment
-  labels:
-    app: log-output
+  name: log-output
 spec:
   replicas: 1
   selector:
@@ -15,28 +13,7 @@ spec:
         app: log-output
     spec:
       containers:
-      - name: log-output-container
-        image: haydar26/log-output:v1.0.0
+      - name: log-output
+        image: haydar26/log-output:latest
         ports:
         - containerPort: 8080
-        volumeMounts:
-        - name: shared-data
-          mountPath: /shared-data
-        livenessProbe:
-          httpGet:
-            path: /status
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-        readinessProbe:
-          httpGet:
-            path: /status
-            port: 8080
-          initialDelaySeconds: 25
-          periodSeconds: 10
-          timeoutSeconds: 5
-      volumes:
-      - name: shared-data
-        persistentVolumeClaim:
-          claimName: shared-pvc

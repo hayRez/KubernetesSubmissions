@@ -5,14 +5,9 @@ const port = 3000;
 // In-memory counter
 let requestCount = 0;
 
-// **********************************************
-// Change the endpoint from '/' to '/pingpong'
-// **********************************************
+// Endpoint for log-output to call
 app.get('/pingpong', (req, res) => {
-  // Increment the counter
   requestCount++;
-
-  // Respond with "pong <count>"
   res.send(`pong ${requestCount}`);
 });
 
