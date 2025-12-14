@@ -5,23 +5,27 @@ const path = require('path');
 
 const PORT = process.env.PORT || 3000;
 
-// Image storage (PV-mounted path)
+// Image cache (PV-mounted)
 const IMAGE_DIR = '/app/data';
 const IMAGE_PATH = path.join(IMAGE_DIR, 'image.jpg');
+const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
 
-// Cache duration: 10 minutes
-const CACHE_DURATION = 10 * 60 * 1000;
+// Hardcoded todos (for now)
+const TODOS = [
+  'Learn Kubernetes basics',
+  'Build a Docker image',
+  'Deploy app to k3d',
+];
 
 // Ensure image directory exists
 if (!fs.existsSync(IMAGE_DIR)) {
   fs.mkdirSync(IMAGE_DIR, { recursive: true });
 }
 
-// Download image safely (handles redirects + avoids 0-byte bug)
+// Download image safely (handles redirects)
 function downloadImage(url) {
   return new Promise((resolve, reject) => {
     https.get(url, (res) => {
-      // Follow redirects
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         return resolve(downloadImage(res.headers.location));
       }
@@ -31,14 +35,12 @@ function downloadImage(url) {
       }
 
       const chunks = [];
-      res.on('data', (chunk) => chunks.push(chunk));
+      res.on('data', chunk => chunks.push(chunk));
       res.on('end', () => {
         const buffer = Buffer.concat(chunks);
-
         if (buffer.length === 0) {
-          return reject(new Error('Downloaded image is empty'));
+          return reject(new Error('Empty image'));
         }
-
         fs.writeFileSync(IMAGE_PATH, buffer);
         console.log(`Downloaded image: ${buffer.length} bytes`);
         resolve();
@@ -47,7 +49,6 @@ function downloadImage(url) {
   });
 }
 
-// Get cached image or download a new one
 async function getImage() {
   if (fs.existsSync(IMAGE_PATH)) {
     const stat = fs.statSync(IMAGE_PATH);
@@ -55,8 +56,6 @@ async function getImage() {
       return IMAGE_PATH;
     }
   }
-
-  // Smaller image (600px wide)
   await downloadImage('https://picsum.photos/600');
   return IMAGE_PATH;
 }
@@ -71,55 +70,107 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200, {
         'Content-Type': 'image/jpeg',
         'Content-Length': stat.size,
-        'Cache-Control': 'no-store',
       });
 
       fs.createReadStream(imgPath).pipe(res);
     } catch (err) {
-      console.error(err);
       res.writeHead(500);
-      res.end('Failed to load image');
+      res.end('Image error');
     }
   } else {
     // Main page
     res.writeHead(200, { 'Content-Type': 'text/html' });
+
     res.end(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Todo App</title>
-          <style>
-            body {
-              font-family: Arial, sans-serif;
-              text-align: center;
-              margin-top: 40px;
-              background: #f9fafb;
-            }
-            img {
-              max-width: 350px;
-              width: 100%;
-              height: auto;
-              border-radius: 10px;
-              box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            }
-            .caption {
-              margin-top: 14px;
-              font-size: 20px;
-              font-weight: bold;
-              color: #1f2937;
-            }
-          </style>
-        </head>
-        <body>
-          <img src="/image" />
-          <div class="caption">DevOps with Kubernetes 2025</div>
-        </body>
-      </html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todo App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .container {
+      width: 420px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .caption {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    ul {
+      margin-top: 16px;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    .hint {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="/image" />
+    <div class="caption">DevOps with Kubernetes 2025</div>
+
+    <h2>Todo List</h2>
+
+    <input
+      type="text"
+      maxlength="140"
+      placeholder="Enter a todo (max 140 characters)"
+    />
+    <div class="hint">Max 140 characters</div>
+    <button>Add Todo</button>
+
+    <ul>
+      ${TODOS.map(todo => `<li>${todo}</li>`).join('')}
+    </ul>
+  </div>
+</body>
+</html>
     `);
   }
 });
 
-// Start server
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
