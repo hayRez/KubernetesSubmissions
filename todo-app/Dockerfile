@@ -5,8 +5,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+COPY index.js ./  
 
-ENV PORT=3000
+RUN mkdir -p /app/data
 
-CMD ["npm", "start"]
+EXPOSE 3000
+
+CMD ["node", "index.js"]  
