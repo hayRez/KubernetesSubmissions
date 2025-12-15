@@ -1,4 +1,4 @@
-i# Exercise 1.2 --- todo
+# Exercise 2.2 --- todo
 
 ## How to run
 
