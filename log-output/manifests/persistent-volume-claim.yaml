@@ -9,4 +9,5 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  volumeName: shared-pv       # 🔹 explicit binding to the PV
   storageClassName: local-path
