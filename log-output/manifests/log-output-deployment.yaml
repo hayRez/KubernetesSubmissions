@@ -18,21 +18,24 @@ spec:
         image: haydar26/log-output:latest
         ports:
         - containerPort: 8080
-
-        # Env variable from ConfigMap
         env:
         - name: MESSAGE
           valueFrom:
             configMapKeyRef:
               name: log-output-config
               key: MESSAGE
-
-        # File from ConfigMap
+        - name: CONFIG_FILE_PATH
+          value: "/config/information.txt"
+        - name: PING_PONG_URL
+          value: "http://ping-pong:3000/pingpong"
+        - name: HTTP_PORT
+          value: "8080"
+        - name: SLEEP_INTERVAL
+          value: "5"
         volumeMounts:
         - name: config-volume
           mountPath: /config
           readOnly: true
-
       volumes:
       - name: config-volume
         configMap:
