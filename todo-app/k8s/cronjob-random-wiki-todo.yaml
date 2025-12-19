@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: random-wiki-todo
+spec:
+  # Every hour, at minute 0
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: wiki-todo-generator
+              image: curlimages/curl:8.6.0
+              command:
+                - sh
+                - -c
+                - |
+                  echo "Fetching random Wikipedia article..."
+
+                  RANDOM_URL=$(curl -s -I https://en.wikipedia.org/wiki/Special:Random \
+                    | grep -i '^location:' \
+                    | awk '{print $2}' \
+                    | tr -d '\r')
+
+                  echo "Random article: $RANDOM_URL"
+
+                  TODO_TEXT="Read $RANDOM_URL"
+
+                  echo "Creating todo: $TODO_TEXT"
+
+                  curl -s -X POST http://todo-backend-service:3001/todos \
+                    -H "Content-Type: application/json" \
+                    -d "{\"text\":\"$TODO_TEXT\"}"
+
+                  echo "Todo created successfully"
