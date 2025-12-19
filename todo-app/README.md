@@ -1,13 +1,13 @@
-# Exercise 2.2 --- todo
+# Exercise 2.8 --- todo
 
 ## How to run
 
 ``` bash
-kubectl apply -f k8s-config.yaml
+kubectl apply -f k8s/
 ```
 
 ## How to clean
 
 ``` bash
-kubectl delete -f k8s-config.yaml
+kubectl delete -f k8s/
 ```
