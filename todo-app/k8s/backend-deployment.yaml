@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-backend
+  template:
+    metadata:
+      labels:
+        app: todo-backend
+    spec:
+      containers:
+        - name: backend
+          image: haydar26/todo-backend:latest
+          ports:
+            - containerPort: 3001
+          envFrom:
+            - configMapRef:
+                name: todo-db-config
+            - secretRef:
+                name: todo-db-secret
