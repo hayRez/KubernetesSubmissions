@@ -26,3 +26,4 @@
 - [2.6](https://github.com/hayRez/KubernetesSubmissions/tree/2.6/log-output)
 - [2.7](https://github.com/hayRez/KubernetesSubmissions/tree/2.7/2.7%20pingpong-psql-db)
 - [2.8](https://github.com/hayRez/KubernetesSubmissions/blob/2.8/todo-app)
+- [2.9](https://github.com/hayRez/KubernetesSubmissions/tree/2.9/todo-app)
