@@ -8,6 +8,7 @@ spec:
   - name: web-gateway
 
   rules:
+  # log-output at /
   - matches:
     - path:
         type: PathPrefix
@@ -16,10 +17,17 @@ spec:
     - name: log-output-service
       port: 80
 
+  # ping-pong at /pingpong → rewritten to /
   - matches:
     - path:
         type: PathPrefix
         value: /pingpong
+    filters:
+    - type: URLRewrite
+      urlRewrite:
+        path:
+          type: ReplacePrefixMatch
+          replacePrefixMatch: /
     backendRefs:
     - name: ping-pong
       port: 3000
