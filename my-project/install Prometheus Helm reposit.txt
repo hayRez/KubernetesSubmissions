@@ -1,0 +1,25 @@
+1️⃣ Add the Prometheus Helm repository
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+2️⃣ Update Helm repositories
+helm repo update
+
+3️⃣ Create the prometheus namespace
+kubectl create namespace prometheus
+
+
+(If it already exists, this will just fail harmlessly.)
+
+4️⃣ Install kube-prometheus-stack with Helm
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
+  --namespace prometheus
+
+5️⃣ Verify Prometheus pods are running
+kubectl get pods -n prometheus
+
+
+Wait until everything shows Running.
+
+6️⃣ Port-forward Prometheus (port 9090)
+kubectl -n prometheus port-forward \
+  prometheus-kube-prometheus-stack-prometheus-0 9090:9090
