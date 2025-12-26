@@ -1,0 +1,49 @@
+name: Cleanup environment on branch delete
+
+on:
+  delete:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    # Only run when a branch is deleted (not a tag)
+    if: github.event.ref_type == 'branch'
+
+    steps:
+    - name: Determine namespace
+      id: env
+      run: |
+        BRANCH="${{ github.event.ref }}"
+
+        if [ "$BRANCH" = "main" ]; then
+          echo "skip=true" >> $GITHUB_OUTPUT
+        else
+          echo "skip=false" >> $GITHUB_OUTPUT
+          echo "namespace=$BRANCH" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Authenticate to Google Cloud
+      if: steps.env.outputs.skip == 'false'
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Setup gcloud
+      if: steps.env.outputs.skip == 'false'
+      uses: google-github-actions/setup-gcloud@v2
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: Get GKE credentials
+      if: steps.env.outputs.skip == 'false'
+      run: |
+        gcloud container clusters get-credentials \
+          "${{ secrets.GKE_CLUSTER }}" \
+          --region "${{ secrets.GKE_REGION }}"
+
+    - name: Delete namespace
+      if: steps.env.outputs.skip == 'false'
+      run: |
+        kubectl delete namespace "${{ steps.env.outputs.namespace }}" \
+          --ignore-not-found=true
