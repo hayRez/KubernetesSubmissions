@@ -50,3 +50,4 @@
 - [4.1](https://github.com/hayRez/KubernetesSubmissions/tree/4.1/log-output)
 - [4.2](https://github.com/hayRez/KubernetesSubmissions/tree/4.2/2.7%20pingpong-psql-db)
 - [4.3](https://github.com/hayRez/KubernetesSubmissions/tree/4.3/my-project)
+- [4.4](https://github.com/hayRez/KubernetesSubmissions/tree/4.4/3.1-pingpong)
