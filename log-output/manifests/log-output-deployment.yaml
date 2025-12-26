@@ -45,6 +45,12 @@ spec:
         - name: config-volume
           mountPath: /config
           readOnly: true
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
       - name: config-volume
         configMap:
