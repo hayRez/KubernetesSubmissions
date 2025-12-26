@@ -5,6 +5,8 @@ metadata:
   namespace: exercises
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: log-output
@@ -27,7 +29,7 @@ spec:
         - name: CONFIG_FILE_PATH
           value: "/config/information.txt"
         - name: PING_PONG_URL
-          value: "http://ping-pong:3000/pingpong"
+          value: "http://ping-pong:3000/"
         - name: HTTP_PORT
           value: "8080"
         - name: SLEEP_INTERVAL
@@ -40,3 +42,4 @@ spec:
       - name: config-volume
         configMap:
           name: log-output-config
+
