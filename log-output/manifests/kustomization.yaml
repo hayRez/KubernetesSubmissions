@@ -10,5 +10,3 @@ resources:
   - ping-pong/service.yaml
   - gateway.yaml
   - httproute.yaml
-
-namespace: exercises
