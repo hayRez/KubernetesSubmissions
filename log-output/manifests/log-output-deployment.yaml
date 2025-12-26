@@ -20,6 +20,13 @@ spec:
         image: haydar26/log-output:latest
         ports:
         - containerPort: 8080
+        resources:
+          requests:
+            cpu: "25m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
         env:
         - name: MESSAGE
           valueFrom:
@@ -42,4 +49,3 @@ spec:
       - name: config-volume
         configMap:
           name: log-output-config
-
