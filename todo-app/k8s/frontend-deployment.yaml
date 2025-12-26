@@ -17,3 +17,6 @@ spec:
           image: haydar26/todo-frontend:latest
           ports:
             - containerPort: 3000
+          env:
+            - name: TODO_BACKEND_URL
+              value: "http://todo-backend:3001"  # must match your backend Service
