@@ -38,3 +38,10 @@ spec:
               key: POSTGRES_PASSWORD
         - name: PORT
           value: "3000"
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 1
