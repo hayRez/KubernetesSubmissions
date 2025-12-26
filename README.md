@@ -39,3 +39,4 @@
 - [3.5](https://github.com/hayRez/KubernetesSubmissions/tree/3.5/log-output)
 - [3.6](https://github.com/hayRez/KubernetesSubmissions/tree/3.6/log-output)
 - [3.7](https://github.com/hayRez/KubernetesSubmissions/tree/3.7/log-output)
+- [3.8](https://github.com/hayRez/KubernetesSubmissions/tree/3.8/log-output)
