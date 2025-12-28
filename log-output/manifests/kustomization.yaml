@@ -3,10 +3,17 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - log-output/configmap.yaml
-  - log-output/deployment.yaml
-  - log-output/service.yaml
-  - ping-pong/deployment.yaml
-  - ping-pong/service.yaml
+
+  - configmap-log-output.yaml
+  - log-output-deployment.yaml
+  - log-output-service.yaml
+
+  - pingpong-deployment.yaml
+  - pingpong-service.yaml
+
+  - greeter-v1.yaml
+  - greeter-v2.yaml
+  - greeter-services.yaml
+  - greeter-httproute.yaml
+
   - gateway.yaml
-  - httproute.yaml
