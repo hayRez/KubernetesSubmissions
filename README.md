@@ -52,3 +52,4 @@
 - [4.3](https://github.com/hayRez/KubernetesSubmissions/tree/4.3/my-project)
 - [4.4](https://github.com/hayRez/KubernetesSubmissions/tree/4.4/3.1-pingpong)
 - [4.5](https://github.com/hayRez/KubernetesSubmissions/tree/4.5/todo-app)
+- [4.7](https://github.com/hayRez/KubernetesSubmissions/tree/4.7/log-output)
