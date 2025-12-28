@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: my-project
-        image: haydar26/my-project:latest
+        image: haydar26/my-project:REPLACE_WITH_SHA
         ports:
         - containerPort: 3000
         env:

@@ -1,0 +1,33 @@
+name: GitOps Deploy My Project
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Docker Login
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Build and Push Image
+      run: |
+        docker build -t haydar26/my-project:${{ github.sha }} .
+        docker push haydar26/my-project:${{ github.sha }}
+
+    - name: Update Image Tag
+      run: |
+        sed -i 's|image: .*|image: haydar26/my-project:${{ github.sha }}|' \
+          my-project/deployment.yaml
+
+    - name: Commit and Push
+      run: |
+        git config user.name "gitops-bot"
+        git config user.email "gitops@github"
+        git commit -am "Update my-project image to ${{ github.sha }}"
+        git push
