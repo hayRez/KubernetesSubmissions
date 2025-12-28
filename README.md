@@ -61,3 +61,4 @@
   ## Chapter 6
 
 - [5.1](https://github.com/hayRez/KubernetesSubmissions/tree/5.1/customResources)
+- [5.2](https://github.com/hayRez/KubernetesSubmissions/tree/5.2/istio)
