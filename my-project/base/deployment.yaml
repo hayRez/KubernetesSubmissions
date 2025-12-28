@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-project
-  namespace: project
 spec:
   replicas: 1
   selector:
@@ -21,3 +20,7 @@ spec:
         env:
         - name: EXAMPLE_ENV
           value: "HelloWorld"
+        - name: FORWARD_EXTERNAL
+          value: "true"
+        - name: DB_BACKUP_ENABLED
+          value: "true"

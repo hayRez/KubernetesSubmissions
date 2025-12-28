@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-project
+spec:
+  template:
+    spec:
+      containers:
+      - name: my-project
+        env:
+        - name: FORWARD_EXTERNAL
+          value: "true"
+        - name: DB_BACKUP_ENABLED
+          value: "true"
