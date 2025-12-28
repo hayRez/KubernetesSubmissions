@@ -56,3 +56,8 @@
 - [4.8](https://github.com/hayRez/KubernetesSubmissions/tree/4.8/my-project)
 - [4.9](https://github.com/hayRez/KubernetesSubmissions/tree/4.9/my-project)
 - [4.10](https://github.com/hayRez/KubernetesSubmissions/tree/4.10/my-project-gitops)
+
+
+  ## Chapter 6
+
+- [5.1](https://github.com/hayRez/KubernetesSubmissions/tree/5.1/customResources)
