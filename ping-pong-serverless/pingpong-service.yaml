@@ -1,0 +1,11 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ping-pong
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+        - image: haydar26/ping-pong-serverless:latest
+
