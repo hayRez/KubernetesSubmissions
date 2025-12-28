@@ -65,3 +65,4 @@
 - [5.3](https://github.com/hayRez/KubernetesSubmissions/tree/5.3/log-output)
 - [5.4](https://github.com/hayRez/KubernetesSubmissions/tree/5.4/wikipedia)
 - [5.6](https://github.com/hayRez/KubernetesSubmissions/tree/5.6/Trying%20serverless)
+- [5.7](https://github.com/hayRez/KubernetesSubmissions/tree/5.7/ping-pong-serverless)
