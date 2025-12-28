@@ -1,0 +1,33 @@
+name: GitOps Deploy Log Output
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Build and push image
+      run: |
+        docker build -t haydar26/log-output:${{ github.sha }} .
+        docker push haydar26/log-output:${{ github.sha }}
+
+    - name: Update deployment image
+      run: |
+        sed -i 's|image: .*|image: haydar26/log-output:${{ github.sha }}|' \
+          log-output/deployment.yaml
+
+    - name: Commit and push
+      run: |
+        git config user.name "gitops-bot"
+        git config user.email "gitops@github"
+        git commit -am "Update log-output image to ${{ github.sha }}"
+        git push

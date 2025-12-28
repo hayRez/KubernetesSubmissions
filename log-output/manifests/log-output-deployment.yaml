@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: log-output
-        image: haydar26/log-output:latest
+        image: haydar26/log-output:REPLACE_WITH_SHA
         ports:
         - containerPort: 8080
         resources:
